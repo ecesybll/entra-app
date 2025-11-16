@@ -1,13 +1,20 @@
-﻿import React from 'react';
+import React from 'react';
+import { 
+  BrowserRouter as Router,
+  Routes,
+  Route 
+} from 'react-router-dom';
 import { 
   AuthenticatedTemplate, 
   UnauthenticatedTemplate, 
   useMsal 
 } from '@azure/msal-react';
 import { loginRequest } from './authConfig';
+import AuthCallback from './components/AuthCallback';
 import './App.css';
 
-function App() {
+// Ana sayfa component'ini ayrı bir fonksiyon olarak tanımla
+function HomePage() {
   const { instance } = useMsal();
 
   const handleLogin = () => {
@@ -64,6 +71,18 @@ function ProfileContent({ onLogout }) {
         Sign Out
       </button>
     </div>
+  );
+}
+
+// Ana App component'i Router ile sarmalansın
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/auth-callback" element={<AuthCallback />} />
+      </Routes>
+    </Router>
   );
 }
 
